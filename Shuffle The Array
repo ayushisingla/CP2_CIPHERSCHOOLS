@@ -1,0 +1,11 @@
+class Solution {
+    public int[] shuffle(int[] nums, int n) {
+        int[] result = new int[2*n];
+        for(int i=0,a=0,b=n;i<= (2*n-2);i +=2,a++,b++)
+        {
+            result[i] = nums[a];
+               result[i+1] = nums[b];
+        }
+        return result;
+    }
+}
