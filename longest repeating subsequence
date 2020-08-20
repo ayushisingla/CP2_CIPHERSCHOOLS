@@ -38,5 +38,3 @@ class LRS
 			+" repeats itself is : "+findLongestRepeatingSubSeq(str)); 
 	} 
 } 
-
-// This code is contributed by Pramod Kumar 
