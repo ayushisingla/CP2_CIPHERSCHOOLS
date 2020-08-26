@@ -1,0 +1,17 @@
+//Longest Increasing Subsequence
+//https://leetcode.com/problems/longest-increasing-subsequence/
+
+public class Solution {
+
+  public class Solution {
+ public int lengthOfLIS(int[] nums) {
+        TreeSet<Integer> set = new TreeSet<>();
+        for (int i : nums) {
+            Integer a = set.ceiling(i);
+            if (a != null) set.remove(a);
+            set.add(i);
+        }
+        return set.size();
+    }
+}
+}
