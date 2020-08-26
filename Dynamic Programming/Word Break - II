@@ -1,0 +1,42 @@
+//Word Break - II
+//https://leetcode.com/problems/word-break-ii/
+
+
+class Solution {
+    Map<String, List<String>> m;
+    int maxLen;
+    public List<String> wordBreak(String s, List<String> wordDict) {
+       m = new HashMap();
+        maxLen = wordDict.stream().mapToInt(a->a.length()).max().orElse(0);
+        Set<String> wD = new HashSet(wordDict);
+       return wb(s, wD); 
+    }
+    
+    public List<String> wb(String s, Set<String> wordDict){
+        List<String> result = new ArrayList();
+        if(s.isEmpty()){
+            result.add("");
+            return result;   
+        }
+        if(m.containsKey(s))
+            return m.get(s);
+        
+        int n = Integer.min(maxLen,s.length());
+        for(int i =1; i<= n; i++){
+            String t = s.substring(0,i);
+            if(wordDict.contains(t)){
+                List<String> l =wb(s.substring(i), wordDict);
+                for(String el: l){
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(t);
+                    sb.append(" ");
+                    sb.append(el);
+                    result.add(sb.toString().trim());
+                }
+            }
+                
+        }
+        m.put(s, result);
+        return result;
+    }
+}
