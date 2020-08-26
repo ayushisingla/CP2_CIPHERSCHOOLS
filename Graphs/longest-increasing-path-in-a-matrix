@@ -1,0 +1,52 @@
+//https://leetcode.com/problems/longest-increasing-path-in-a-matrix/submissions/
+//longest-increasing-path-in-a-matrix
+
+class Solution {
+  public int longestIncreasingPath(int[][] matrix) {
+    if (matrix.length == 0) {
+      return 0;
+    }
+    
+    // run dfs on each cell exactly once and cache here
+    int[][] memo = new int[matrix.length][matrix[0].length];
+    
+    int m = 1;
+    
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[0].length; j++) {
+        int currLen = find(matrix, i, j, Integer.MIN_VALUE, memo);
+        m = Math.max(m, currLen);
+        memo[i][j] = currLen;
+      }
+    }
+    return m;
+  }
+  
+  private int find(int[][] matrix, int i, int j, int last, int[][] memo) {
+    if (i < 0 ||
+        j < 0 ||
+        i == matrix.length ||
+        j == matrix[0].length ||
+        matrix[i][j] <= last) {
+      // base case, path ends here so return 0
+      return 0;
+    } else {
+      if (memo[i][j] > 0) {
+        // we've searched from this cell
+        return memo[i][j];
+      } else {
+        // search it the first time
+        int val = matrix[i][j];
+        int currMax = 1 + Math.max(
+          Math.max(
+            find(matrix, i-1, j, val, memo),
+            find(matrix, i, j-1, val, memo)),
+          Math.max(
+            find(matrix, i+1, j, val, memo),
+            find(matrix, i, j+1, val, memo)));
+        memo[i][j] = currMax;
+        return currMax;
+      }
+    }
+  }
+}
