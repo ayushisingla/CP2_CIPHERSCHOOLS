@@ -1,0 +1,35 @@
+//number-of-islands
+//https://leetcode.com/problems/number-of-islands/submissions/
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        return findCircleNum(grid);
+    }
+    
+    public int findCircleNum(char[][] M) {
+        int count=0;
+        for(int i=0;i<M.length;i++){
+            for(int j=0;j<M[0].length;j++){
+                if(M[i][j]=='1'){
+                    recur(M,i,j);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public void recur(char[][] M ,int i,int j){
+        if(i<0||j<0||i>=M.length||j>=M[0].length){
+            return;
+        }
+        
+        if(M[i][j]=='1'){
+            M[i][j]='3';
+            recur(M,i+1,j);
+            recur(M,i-1,j);
+            recur(M,i,j+1);
+            recur(M,i,j-1);
+        }
+    }
+
+}
