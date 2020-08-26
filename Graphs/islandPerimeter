@@ -1,0 +1,48 @@
+//https://leetcode.com/problems/island-perimeter/
+//islandPerimeter
+
+class Solution {
+     public int islandPerimeter(int[][] grid) {
+        
+      int row_len=grid.length;//length of the row
+      int column_len=grid[0].length;//column length
+      
+      int counter=0;
+      
+      for(int i=0;i<row_len;i++)
+      {
+        for(int j=0;j<column_len;j++)
+        {
+          if(grid[i][j]==1)
+          {
+            
+            
+            if(i==0 || grid[i-1][j]==0 )
+            {
+              counter++;
+            }//for top
+            
+            if(i==row_len-1 || grid[i+1][j]==0 )
+            {
+              counter++;
+            }//down
+            
+            if(j==column_len-1 || grid[i][j+1]==0 )
+            {
+              counter++;
+            }//for right
+            
+            if(j==0 || grid[i][j-1]==0 )
+            {
+              counter++;
+            }
+            
+          }
+          
+        }
+      }
+      
+      return counter;
+      
+    }
+}
