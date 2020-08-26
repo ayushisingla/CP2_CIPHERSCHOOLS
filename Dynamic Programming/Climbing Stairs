@@ -1,0 +1,26 @@
+//Climbing Stairs
+//https://leetcode.com/problems/climbing-stairs/
+
+class Solution {
+    public int climbStairs(int n) {
+        
+        int arr[] = new int[n + 1];
+        return climb(0, n, arr);
+    }
+
+    public int climb(int i, int n, int arr[]) {
+        if (i > n) {
+            return 0;
+        }
+        
+        if (i == n) {
+            return 1;
+        }
+        if (arr[i] > 0) {
+            return arr[i];
+        }
+        arr[i] = climb(i + 1, n, arr) + climb(i + 2, n, arr);
+        return arr[i];
+
+    }
+}
