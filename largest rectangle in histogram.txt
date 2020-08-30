@@ -1,0 +1,35 @@
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        
+        if(heights.length==1) return heights[0];
+        Stack<Integer> s = new Stack<Integer>();
+        int maxarea = 0;
+        int i=0;
+        while(i<heights.length){ // process all the elements 
+            if(s.isEmpty() || heights[s.peek()] <= heights[i]){ // if inserting greater element than peek of stack
+                s.push(i);
+                i++;
+            }
+            else{ // if inserting smaller than peek
+                
+                int curr = s.pop();
+                int area = heights[curr] * (s.isEmpty()? i : i-(1+s.peek()));
+                if(area>maxarea){
+                    maxarea = area;
+                }    
+            }
+        }
+        
+        
+        //after all insertions, some processing still required now, so do this asap
+        while(!s.isEmpty()){
+                int curr = s.pop();
+                int area = heights[curr] * (s.isEmpty()? i : i-(1+s.peek()));
+                if(area>maxarea){
+                    maxarea = area;
+                } 
+        }
+        
+        return maxarea;
+}
+}
