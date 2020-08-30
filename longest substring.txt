@@ -1,0 +1,21 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    const arr = Array(...s);
+    
+    const map = {};
+    let res = 0;
+    let pointer = -1
+
+    arr.forEach((a, j) => {
+        if (pointer <= map[a] && (typeof map[a] !== 'undefined')) {
+            pointer = map[a]
+        }
+        map[a] = j
+
+        res = Math.max(res, j - pointer)
+    })
+    return res
+};
