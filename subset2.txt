@@ -1,0 +1,18 @@
+var subsetsWithDup = function(nums) {
+    let res = []
+    res.push([])
+    nums.sort((a, b) => a-b)
+    helper(nums, res, [], 0)
+    return res
+};
+
+var helper = function(nums, res, comb, start) {
+    for (let i = start; i < nums.length; i++) {
+        if (i == start || nums[i] != nums[i - 1]) {
+            comb.push(nums[i])
+            res.push(comb.slice())
+            helper(nums, res, comb, i + 1)
+            comb.pop()
+        }
+    }
+}

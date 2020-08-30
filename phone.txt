@@ -1,0 +1,28 @@
+class Solution {
+   private String[] arr = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<>();
+        letters(digits, new StringBuilder(), res, 0);
+        return res;
+    }
+    
+    private void letters(String digits, StringBuilder sb, List<String> list, int index){
+        if(index >= digits.length()){
+            if(sb.length() > 0)
+                list.add(sb.toString());
+            return;
+        }
+        int i = digits.charAt(index) - '0' - 2;
+        if(i < 0){
+            list = new ArrayList<>();
+            return;
+        }
+        for(char c : arr[i].toCharArray()){
+            int size = sb.length();
+            sb.append(c);
+            letters(digits, sb, list, index+1);
+            sb.delete(size, sb.length());
+        }
+    }
+}

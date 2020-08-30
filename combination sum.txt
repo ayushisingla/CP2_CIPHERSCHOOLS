@@ -1,0 +1,35 @@
+class Solution {
+     public void solve(List<List<Integer>>res,List<Integer>curr,int[] nums,int start,int tar,int k)
+    {
+        if(tar==0 && curr.size()==k)
+        {
+            res.add(new ArrayList(curr));
+            return;
+        }
+        for(int i=start;i<9;i++)
+        {
+            if(nums[i]<=tar  && curr.size()<k)
+            {
+                curr.add(nums[i]);
+                solve(res,curr,nums,i+1,tar-nums[i],k);
+                curr.remove(curr.size()-1);
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+    
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        int[] nums=new int[9];
+        for(int i=1;i<=9;i++)
+        {
+            nums[i-1]=i;
+        }
+        List<List<Integer>>res=new ArrayList<>();
+        List<Integer>curr=new ArrayList<>();
+        solve(res,curr,nums,0,n,k);
+        return res;
+    }
+}

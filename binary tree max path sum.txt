@@ -1,0 +1,96 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+     int MaxSum = Integer.MIN_VALUE;
+    
+    public int maxPathSum(TreeNode root) {
+        
+        maxPathSumHelper(root);
+        
+        return MaxSum; 
+    }
+    
+    int maxPathSumHelper(TreeNode root)
+    {
+        
+        int res = Integer.MIN_VALUE;
+        int L = Integer.MIN_VALUE;
+        int R = Integer.MIN_VALUE;
+        
+        int Sum1 = 0; // L + root
+        int Sum2 = 0; // R + root
+        int Sum3 = 0; // L + R + root
+        
+        
+        if(root.left == null && root.right == null)
+        {
+            /* No other option only root.val is the option */
+            res = root.val;
+            MaxSum = Math.max(MaxSum,res);
+        }
+        else if(root.left != null && root.right == null)
+        {
+            L = maxPathSumHelper(root.left);
+            Sum1 = L + root.val;
+            
+            /* return Max should be calculated among "current + left tree" or "only current node" */
+        
+            res = Math.max(root.val, Sum1);
+            MaxSum = Math.max(MaxSum, res);
+        }
+        else if(root.right != null && root.left == null)
+        {
+            R = maxPathSumHelper(root.right);
+            Sum2 = R + root.val;
+        
+            /* return Max should be calculated among "current + right tree" or "only current node" */
+        
+            res = Math.max(root.val, Sum2); 
+            MaxSum = Math.max(MaxSum, res);            
+        }
+        else
+        {
+            L = maxPathSumHelper(root.left);
+            Sum1 = L + root.val;
+            
+            R = maxPathSumHelper(root.right);
+            Sum2 = R + root.val;
+            
+            Sum3 = L + R + root.val;
+            
+            /* return res should be calculated among "current + left tree" or "current + right tree" or "only current node" */
+            /* As upper node has to include the current node to calculate its maximum */
+            res = Math.max(Sum1, Math.max(Sum2, root.val));
+            
+            /* Max should be updated among */
+            // 1. current Node + Left Tree (Sum1)
+            // 2. current Node + Right Tree (Sum2)
+            // 3. current Node + Left Tree + Right Tree (Sum3)
+            // 4. only Left Tree (L)
+            // 5. only Right Tree (R)
+            // 6. only current node (root.val)
+            
+            MaxSum = Math.max(MaxSum, Math.max(Sum1,
+                                            Math.max(Sum2,
+                                                Math.max(Sum3, 
+                                                    Math.max(L,
+                                                        Math.max(R, root.val))))));
+        }
+        
+        /* return value for upper Tree calculations */
+        return res;   
+    }
+}
